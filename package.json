@@ -1,0 +1,16 @@
+{
+  "name": "node-mentions2sns",
+  "version": "0.0.1",
+  "description": "Daemon to send twitter mentions to an SNS topic",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "hirenj@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "promptly": "^2.2.0",
+    "twit": "^2.2.9",
+    "twitter-pin-auth": "^0.2.0"
+  }
+}
