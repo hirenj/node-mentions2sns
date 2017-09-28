@@ -13,6 +13,29 @@ const target_user = process.argv[2];
 
 let have_credentials = Promise.resolve();
 
+const AWS = require("aws-sdk");
+
+let send_sns = function(event) {
+    var eventText = JSON.stringify(event);
+    console.log("Received event:", eventText);
+    var sns = new AWS.SNS();
+    var params = {
+        Message: eventText,
+        Subject: `Twitter mention of ${target_user}`,
+        TopicArn: process.env.SNS_TOPIC_ARN
+    };
+    return new Promise( (resolve,reject) => {
+      sns.publish(params, (err,result) => {
+        if (err) {
+          reject(err);
+          return;
+        } else {
+          resolve();
+        }
+      });
+    });
+};
+
 if ( ! fs.existsSync('credentials.json')) {
   let twitterPinAuth = new TwitterPinAuth(consumer_key, consumer_secret, target_user, false);
 
@@ -46,7 +69,7 @@ have_credentials.then(credentials => {
   }); 
 
   var stream = T.stream('statuses/filter', { track: `@${target_user}` });
-  stream.on('tweet', tweet => console.log(tweet.text));
+  stream.on('tweet', send_sns );
   stream.on('error', err => console.log(err));
 });
 
