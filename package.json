@@ -10,6 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.124.0",
+    "fetch": "^1.1.0",
+    "node-fetch": "^1.7.3",
+    "promise-ratelimit": "0.0.3",
     "promptly": "^2.2.0",
     "twit": "^2.2.9",
     "twitter-pin-auth": "^0.2.0"
